@@ -1,4 +1,4 @@
-![Astro Sphere Lighthouse Score](_astrosphere.jpg)
+<!-- ![Astro Sphere Lighthouse Score](_astrosphere.jpg)
 
 Astro Sphere is a static, minimalist, lightweight, lightning fast portfolio and blog theme based on my personal website.
 
@@ -86,4 +86,4 @@ Added slightly more particle density in both light and dark mode.
 Added subtle dark mode star and meteor animations.
 
 Removed eslint config
-
+ -->
