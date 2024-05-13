@@ -81,17 +81,17 @@ export const SOCIALS: Socials = [
     TEXT: "grotar123",
     HREF: "https://instagram.com/grotar123"
   },
-  // { 
-  //   NAME: "LinkedIn",
-  //   ICON: "linkedin",
-  //   TEXT: "markhorn-dev",
-  //   HREF: "https://www.linkedin.com/in/markhorn-dev/",
-  // },
-  // { 
-  //   NAME: "Twitter",
-  //   ICON: "twitter-x",
-  //   TEXT: "markhorn_dev",
-  //   HREF: "https://twitter.com/markhorn_dev",
-  // },
+  { 
+    NAME: "LinkedIn",
+    ICON: "linkedin",
+    TEXT: "grega-rotar-51103121b",
+    HREF: "https://www.linkedin.com/in/grega-rotar-51103121b/",
+  },
+  { 
+    NAME: "Twitter",
+    ICON: "twitter-x",
+    TEXT: "grega_rotar",
+    HREF: "https://twitter.com/grega_rotar",
+  },
 ]
 

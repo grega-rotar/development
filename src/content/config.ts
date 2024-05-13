@@ -7,6 +7,7 @@ const work = defineCollection({
     role: z.string(),
     dateStart: z.coerce.date(),
     dateEnd: z.union([z.coerce.date(), z.string()]),
+    searchTags: z.array(z.string()).optional(),
   }),
 })
 
@@ -19,6 +20,7 @@ const blog = defineCollection({
     authors: z.array(z.string()).optional(),
     tags: z.array(z.string()),
     draft: z.boolean().optional(),
+    searchTags: z.array(z.string()).optional(),
   }),
 })
 
@@ -33,6 +35,7 @@ const projects = defineCollection({
     draft: z.boolean().optional(),
     demoUrl: z.string().optional(),
     repoUrl: z.string().optional(),
+    searchTags: z.array(z.string()).optional(),
   }),
 })
 
@@ -47,6 +50,7 @@ const homeLab = defineCollection({
     draft: z.boolean().optional(),
     demoUrl: z.string().optional(),
     repoUrl: z.string().optional(),
+    searchTags: z.array(z.string()).optional(),
   }),
 })
 
@@ -59,4 +63,4 @@ const legal = defineCollection({
   }),
 })
 
-export const collections = { work, blog, projects, legal, homeLab }
+export const collections = { work, blog, projects, legal, homeLab}

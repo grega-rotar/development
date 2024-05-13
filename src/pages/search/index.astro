@@ -15,8 +15,10 @@ const projects = (await getCollection("projects"))
   const homeLab = (await getCollection("homeLab"))
   .filter(post => !post.data.draft)
 
+  const work = (await getCollection("work"))
 
-const data = [...posts, ...projects, ...homeLab] as CollectionEntry<"blog">[]
+
+const data = [...posts, ...projects, ...homeLab, ...work] as CollectionEntry<"blog">[]
 ---
 
 <PageLayout title={SEARCH.TITLE} description={SEARCH.DESCRIPTION}>

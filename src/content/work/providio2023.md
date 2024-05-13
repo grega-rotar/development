@@ -11,3 +11,5 @@ In August 2023, I worked at PROVIDIO, trgovina in storitve, d.o.o. as a warehous
   - Handled shipping tasks, including loading packages and transporting pallets
   - Assisted with basic computer requirements
   - Aided in flood aftermath resolution, including cleaning, inventory counting, and removal of damaged items
+  
+[<img src="https://providio.si/images/logo.png" alt="provido" style="height:80px">](https://www.providio.si/)
