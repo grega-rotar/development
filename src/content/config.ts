@@ -16,6 +16,7 @@ const blog = defineCollection({
     title: z.string(),
     summary: z.string(),
     date: z.coerce.date(),
+    authors: z.array(z.string()).optional(),
     tags: z.array(z.string()),
     draft: z.boolean().optional(),
   }),
@@ -27,12 +28,28 @@ const projects = defineCollection({
     title: z.string(),
     summary: z.string(),
     date: z.coerce.date(),
+    authors: z.array(z.string()).optional(),
     tags: z.array(z.string()),
     draft: z.boolean().optional(),
     demoUrl: z.string().optional(),
     repoUrl: z.string().optional(),
   }),
 })
+
+const homeLab = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    authors: z.array(z.string()).optional(),
+    tags: z.array(z.string()),
+    draft: z.boolean().optional(),
+    demoUrl: z.string().optional(),
+    repoUrl: z.string().optional(),
+  }),
+})
+
 
 const legal = defineCollection({
   type: "content",
@@ -42,4 +59,4 @@ const legal = defineCollection({
   }),
 })
 
-export const collections = { work, blog, projects, legal }
+export const collections = { work, blog, projects, legal, homeLab }

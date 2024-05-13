@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import HomeLab from "@components/HomeLab"
+import { HOMELAB } from "@consts"
+
+const homeLab = (await getCollection("homeLab"))
+  .filter(project => !project.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const tags = [...new Set(homeLab.flatMap(project => project.data.tags))]
+  .sort((a, b) => a.localeCompare(b))
+---
+
+<PageLayout title={HOMELAB.TITLE} description={HOMELAB.DESCRIPTION}>
+  <TopLayout>
+    <div class="animate page-heading">
+      {HOMELAB.TITLE}
+    </div>
+  </TopLayout>
+  <BottomLayout>
+    <div class="animate">
+      <HomeLab client:load tags={tags} data={homeLab} />
+    </div>
+  </BottomLayout>
+</PageLayout>
