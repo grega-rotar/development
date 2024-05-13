@@ -10,8 +10,10 @@ const { entry } = Astro.props
 const { collection, data, body } = entry
 const { title, summary, date, authors } = data
 
-const demoUrl = collection === "projects" ? data.demoUrl : null
-const repoUrl = collection === "projects" ? data.repoUrl : null
+
+// FIXME: če želim support za demoUrl in repoUrl moram tukaj spremeniti
+const demoUrl = (collection === "projects" || collection === "homeLab") ? data.demoUrl : null;
+const repoUrl = (collection === "projects" || collection === "homeLab") ? data.repoUrl : null;
 ---
 
 <div>
