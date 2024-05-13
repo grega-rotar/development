@@ -1,5 +1,5 @@
 ---
-title: "MetalLB in kubernetes cluster"
+title: "MetalLB in Kubernetes Cluster"
 summary: "How to setup a MetalLB in kubernetes cluster to allow EXTERNAL-IP to work"
 date: "May 13 2024"
 draft: false
@@ -8,7 +8,7 @@ tags:
 - kubernetes
 - MetalLB
 - setup
-demoUrl: "https://metallb.io/configuration/_advanced_ipaddresspool_configuration/"
+repoUrl: "https://metallb.io/"
 authors:
 - Grega Rotar
 ---
