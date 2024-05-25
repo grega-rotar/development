@@ -2,7 +2,7 @@ import { formatDate } from "@lib/utils"
 import type { CollectionEntry } from "astro:content"
 
 type Props = {
-  entry: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"homeLab"> | CollectionEntry<"template">
+  entry: CollectionEntry<"blog"> | CollectionEntry<"projects"> | CollectionEntry<"homeLab">
   pill?: boolean
 }
 
