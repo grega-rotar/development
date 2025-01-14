@@ -3,7 +3,7 @@ import type { CollectionEntry } from "astro:content"
 import { formatDate, readingTime } from "@lib/utils"
 
 type Props = {
-  entry: CollectionEntry<"projects"> | CollectionEntry<"blog"> | CollectionEntry<"homeLab">
+  entry: CollectionEntry<"projects"> | CollectionEntry<"devHub">
 }
 
 const { entry } = Astro.props
@@ -12,8 +12,8 @@ const { title, summary, date, authors } = data
 
 
 // FIXME: če želim support za demoUrl in repoUrl moram tukaj spremeniti
-const demoUrl = (collection === "projects" || collection === "homeLab") ? data.demoUrl : null;
-const repoUrl = (collection === "projects" || collection === "homeLab") ? data.repoUrl : null;
+const demoUrl = (collection === "projects" || collection === "devHub") ? data.demoUrl : null;
+const repoUrl = (collection === "projects" || collection === "devHub") ? data.repoUrl : null;
 ---
 
 <div>

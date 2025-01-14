@@ -8,28 +8,28 @@ import ArticleBottomLayout from "@layouts/ArticleBottomLayout.astro"
 
 // Create the static home_lab pages
 export async function getStaticPaths() {
-	const homeLab = await getCollection("homeLab")
-	return homeLab.map((homeLabPost) => ({
-		params: { slug: homeLabPost.slug },
-		props: homeLabPost,
+	const devHub = await getCollection("devHub")
+	return devHub.map((devHubPost) => ({
+		params: { slug: devHubPost.slug },
+		props: devHubPost,
 	}))
 }
 
 // Get the requested project
-type Props = CollectionEntry<"homeLab">
-const homeLabPost = Astro.props
-const { title, summary } = homeLabPost.data
+type Props = CollectionEntry<"devHub">
+const devHubPost = Astro.props
+const { title, summary } = devHubPost.data
 ---
 
 <PageLayout title={title} description={summary}>
   <TopLayout>
     <div class="animate">
-      <ArticleTopLayout entry={homeLabPost} />
+      <ArticleTopLayout entry={devHubPost} />
     </div>
   </TopLayout>
   <BottomLayout>
     <div class="animate">
-      <ArticleBottomLayout entry={homeLabPost} />
+      <ArticleBottomLayout entry={devHubPost} />
     </div>
   </BottomLayout>
 </PageLayout>

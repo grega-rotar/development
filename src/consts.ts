@@ -8,15 +8,9 @@ export const SITE: Site = {
 }
 
 // Work Page
-export const WORK: Page = {
-  TITLE: "Work",
-  DESCRIPTION: "Places I have worked.",
-}
-
-// Blog Page
-export const BLOG: Page = {
-  TITLE: "Blog",
-  DESCRIPTION: "Writing on topics I am passionate about.",
+export const JOURNEY: Page = {
+  TITLE: "Journey",
+  DESCRIPTION: "My working journey.",
 }
 
 // Projects Page 
@@ -25,10 +19,16 @@ export const PROJECTS: Page = {
   DESCRIPTION: "Recent projects I have worked on.",
 }
 
-// HomeLab Page 
-export const HOMELAB: Page = {
-  TITLE: "Home Lab",
-  DESCRIPTION: "My home lab insight.",
+// devHub Page 
+export const DEV_HUB: Page = {
+  TITLE: "Dev Hub",
+  DESCRIPTION: "My dev things!",
+}
+
+// Connect page
+export const CONNECT: Page = {
+  TITLE: "Connect",
+  DESCRIPTION: "Work with me!"
 }
 
 // Search Page
@@ -39,25 +39,25 @@ export const SEARCH: Page = {
 
 // Links
 export const LINKS: Links = [
+  // { 
+  //   TEXT: "Home", 
+  //   HREF: "/", 
+  // },
   { 
-    TEXT: "Home", 
-    HREF: "/", 
-  },
-  { 
-    TEXT: "Work", 
-    HREF: "/work", 
-  },
-  { 
-    TEXT: "Blog", 
-    HREF: "/blog", 
+    TEXT: "Journey", 
+    HREF: "/journey", 
   },
   { 
     TEXT: "Projects", 
     HREF: "/projects", 
   },
   {
-    TEXT: "Home Lab",
-    HREF: "/homeLab"
+    TEXT: "Dev Hub",
+    HREF: "/devHub"
+  },
+  {
+    TEXT: "Connect",
+    HREF: "/connect"
   },
 ]
 

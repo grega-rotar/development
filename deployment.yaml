@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: etiam-si
-  namespace: etiam-si
+  name: grega-dev
+  namespace: grega-dev
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: etiam-si
+      app: grega-dev
   template:
     metadata:
       labels:
-        app: etiam-si
+        app: grega-dev
     spec:
       containers:
-      - name: etiam-si
-        image: docker-registry.etiam.si/etiam-si:latest
+      - name: grega-dev
+        image: registry.etiam.si/public/grega-dev:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -24,12 +24,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: etiam-si-service
-  namespace: etiam-si
+  name: grega-dev-service
+  namespace: grega-dev
 spec:
   type: ClusterIP
   selector:
-    app: etiam-si
+    app: grega-dev
   ports:
     - protocol: TCP
       port: 8080
@@ -39,18 +39,18 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: etiam-si-ingress
-  namespace: etiam-si
+  name: grega-dev-ingress
+  namespace: grega-dev
 spec:
   ingressClassName: nginx
   rules:
-   - host: etiam.si
+   - host: grega.dev
      http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: etiam-si-service
+            name: grega-dev-service
             port:
               number: 8080

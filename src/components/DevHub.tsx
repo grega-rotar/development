@@ -5,15 +5,15 @@ import { cn } from "@lib/utils"
 
 type Props = {
   tags: string[]
-  data: CollectionEntry<"blog">[]
+  data: CollectionEntry<"devHub">[]
 }
 
-export default function Blog({ data, tags }: Props) {
+export default function devHub({ data, tags }: Props) {
   const [filter, setFilter] = createSignal(new Set<string>())
-  const [posts, setPosts] = createSignal<CollectionEntry<"blog">[]>([])
+  const [devHub, setdevHub] = createSignal<CollectionEntry<"devHub">[]>([])
 
   createEffect(() => {
-    setPosts(data.filter((entry) => 
+    setdevHub(data.filter((entry) => 
       Array.from(filter()).every((value) => 
         entry.data.tags.some((tag:string) => 
           tag.toLowerCase() === String(value).toLowerCase()
@@ -56,12 +56,12 @@ export default function Blog({ data, tags }: Props) {
       <div class="col-span-3 sm:col-span-2">
         <div class="flex flex-col">
           <div class="text-sm uppercase mb-2">
-            SHOWING {posts().length} OF {data.length} POSTS
+            SHOWING {devHub().length} OF {data.length}
           </div>
           <ul class="flex flex-col gap-3">
-            {posts().map((post) => (
+            {devHub().map((devHub) => (
               <li>
-                <ArrowCard entry={post} />
+                <ArrowCard entry={devHub} />
               </li>
             ))}
           </ul>

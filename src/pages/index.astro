@@ -7,353 +7,317 @@ import { SITE, SOCIALS } from "@consts";
 import TwinklingStars from "@components/TwinklingStars.astro";
 import MeteorShower from "@components/MeteorShower.astro";
 
-const posts = (await getCollection("blog"))
-  .filter((post) => !post.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
 
 const projects = (await getCollection("projects"))
-  .filter((project) => !project.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+    .filter((project) => !project.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 3);
 
-const homeLab = (await getCollection("homeLab"))
-  .filter((homeLab) => !homeLab.data.draft)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 3);
+const devHub = (await getCollection("devHub"))
+    .filter((devHub) => !devHub.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+    .slice(0, 1);
 
 // FIXME: dodaj da quotes je iz datoteke
 const quotes = [
-  {
-    author: "Linus Torvalds",
-    quote: "Avoiding complexity reduces bugs.",
-  },
-  // ,
-  // {
-  //   "quote": "First, solve the problem. Then, write the code.",
-  //   "author": "John Johnson"
-  // },
-  // {
-  //   "quote": "The computer was born to solve problems that did not exist before.",
-  //   "author": "Bill Gates"
-  // },
-  // {
-  //   "quote": "Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program.",
-  //   "author": "Linus Torvalds"
-  // }
+    {
+        author: "Linus Torvalds",
+        quote: "Avoiding complexity reduces bugs.",
+    },
+    // ,
+    // {
+    //   "quote": "First, solve the problem. Then, write the code.",
+    //   "author": "John Johnson"
+    // },
+    // {
+    //   "quote": "The computer was born to solve problems that did not exist before.",
+    //   "author": "Bill Gates"
+    // },
+    // {
+    //   "quote": "Most good programmers do programming not because they expect to get paid or get adulation by the public, but because it is fun to program.",
+    //   "author": "Linus Torvalds"
+    // }
 ];
 
 const getRandomQuote = () => {
-  const randomIndex = Math.floor(Math.random() * quotes.length);
-  return quotes[randomIndex];
+    const randomIndex = Math.floor(Math.random() * quotes.length);
+    return quotes[randomIndex];
 };
 
 const randomQuote = getRandomQuote(); // Store the random quote in a variable
 
 const stack = [
-  {
-    text: "Astro",
-    icon: "astro",
-    href: "https://astro.build",
-  },
-  {
-    text: "Javascript",
-    icon: "javascript",
-    href: "https://www.javascript.com",
-  },
-  {
-    text: "Typescript",
-    icon: "typescript",
-    href: "https://www.typescriptlang.org",
-  },
-  {
-    text: "Tailwind",
-    icon: "tailwind",
-    href: "https://tailwindcss.com",
-  },
+    {
+        text: "Astro",
+        icon: "astro",
+        href: "https://astro.build",
+    },
+    {
+        text: "Javascript",
+        icon: "javascript",
+        href: "https://www.javascript.com",
+    },
+    {
+        text: "Typescript",
+        icon: "typescript",
+        href: "https://www.typescriptlang.org",
+    },
+    {
+        text: "Tailwind",
+        icon: "tailwind",
+        href: "https://tailwindcss.com",
+    },
 ];
 
 const stackRunningOn = [
-  {
-    text: "Kubernetes",
-    icon: "kubernetes",
-    href: "https://kubernetes.io/",
-  },
-  {
-    text: "Fedora Server",
-    icon: "fedora",
-    href: "https://fedoraproject.org/en/server/download/",
-  },
-  {
-    text: "Nginx",
-    icon: "nginx",
-    href: "https://nginx.org/",
-  },
+    {
+        text: "Kubernetes",
+        icon: "kubernetes",
+        href: "https://kubernetes.io/",
+    },
+    {
+        text: "Fedora Server",
+        icon: "fedora",
+        href: "https://fedoraproject.org/en/server/download/",
+    },
+    {
+        text: "Nginx",
+        icon: "nginx",
+        href: "https://nginx.org/",
+    },
 ];
 ---
 
 <PageLayout title="Home" description={SITE.DESCRIPTION}>
-  <!-- Light Mode: Particles -->
-  <div class="absolute inset-0 block dark:hidden">
+    <!-- Light Mode: Particles -->
+    <!-- <div class="absolute inset-0 block dark:hidden">
     <div id="particles1" class="fixed inset-0"></div>
     <div id="particles2" class="fixed inset-0"></div>
     <div id="particles3" class="fixed inset-0"></div>
-  </div>
+  </div> -->
 
-  <!-- Dark Theme: Stars -->
-  <div class="absolute inset-0 bg-black hidden dark:block">
+    <!-- Dark Theme: Stars -->
+    <!-- <div class="absolute inset-0 bg-black hidden dark:block">
     <div id="stars1" class="fixed inset-0"></div>
     <div id="stars2" class="fixed inset-0"></div>
     <div id="stars3" class="fixed inset-0"></div>
-  </div>
+  </div> -->
 
-  <!-- Dark Theme: Twinkling Stars / Metors -->
-  <div id="galaxy" class="fixed inset-0">
+    <!-- Dark Theme: Twinkling Stars / Metors -->
+    <!-- <div id="galaxy" class="fixed inset-0">
     <div class="hidden dark:block">
       <TwinklingStars />
       <MeteorShower />
     </div>
-  </div>
+  </div> -->
 
-  <script is:inline src="/js/bg.js"></script>
+    <script is:inline src="/js/bg.js"></script>
 
-  <!-- HERO -->
-  <section class="relative h-screen w-full">
-    <div
-      id="planetcont"
-      class="animate absolute inset-0 top-1/4 overflow-hidden"
-    >
-      <div
-        id="crescent"
-        class="absolute top-0 left-1/2 -translate-x-1/2 w-[250vw] min-h-[100vh] aspect-square rounded-full p-[1px] bg-gradient-to-b from-black/25 dark:from-white/75 from-0% to-transparent to-5%"
-      >
+    <!-- HERO -->
+    <section class="relative h-screen w-full">
         <div
-          id="planet"
-          class="w-full h-full bg-white dark:bg-black rounded-full p-[1px] overflow-hidden flex justify-center"
+            id="planetcont"
+            class="animate absolute inset-0 top-1/4 overflow-hidden"
         >
-          <div
-            id="blur"
-            class="w-full h-20 rounded-full bg-neutral-900/25 dark:bg-white/25 blur-3xl"
-          >
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="animate absolute h-full w-full flex items-center justify-center"
-    >
-      <div class="relative w-full h-full flex items-center justify-center">
-        <div class="p-5 text-center">
-          <p
-            class="animated text-lg md:text-xl lg:text-2xl font-semibold opacity-75"
-          >
-            Welcome to a website of
-          </p>
-          <p
-            class="animated text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-black dark:text-white"
-          >
-            Grega Rotar
-          </p>
-          <br />
-          <p class="animated text-sm md:text-base lg:text-lg opacity-75">
-            Dive in and discover what I have to offer on my website!
-            <!-- {randomQuote.quote} <br>
-            - {randomQuote.author} Display random quote here -->
-          </p>
-          <div
-            id="ctaButtons"
-            class="animated flex flex-wrap gap-4 justify-center mt-5"
-          >
-            <a
-              href="/blog"
-              class="py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend"
+            <div
+                id="crescent"
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-[250vw] min-h-[100vh] aspect-square rounded-full p-[1px] bg-gradient-to-b from-black/25 dark:from-white/75 from-0% to-transparent to-5%"
             >
-              Read my blog
-            </a>
-            <a
-              href="/work"
-              class="py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend"
-            >
-              View my work experiences
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="relative bg-white dark:bg-black">
-    <div class="mx-auto max-w-screen-sm p-5 space-y-24 pb-16">
-      <!-- About Section -->
-      <section class="animate">
-        <article>
-          <p>My journey in technology has been fueled by:</p>
-          <ul>
-            <li>A relentless curiosity to explore and master new concepts</li>
-            <li>An unwavering commitment to continuous improvement</li>
-            <li>A penchant for pushing boundaries and embracing challenges</li>
-            <li>
-              A collaborative spirit, thriving in diverse team environments
-            </li>
-          </ul>
-          <p>
-            With a blend of technical expertise and personal qualities, I'm
-            ready to tackle any obstacle and drive innovation forward.
-          </p>
-        </article>
-      </section>
-
-      <!-- Home Lab Preview Section -->
-      <section class="animate">
-        <div class="space-y-4">
-          <div class="flex justify-between">
-            <p class="font-semibold text-black dark:text-white">
-              Recent documents from Home Lab
-            </p>
-            <a
-              href="/homeLab"
-              class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
-            >
-              <span
-                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
-              >
-                All Home Lab documents
-              </span>
-            </a>
-          </div>
-          <ul class="space-y-4">
-            {
-              homeLab.map((homeLab) => (
-                <li>
-                  <ArrowCard entry={homeLab} />
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-
-      <!-- Blog Preview Section -->
-      <section class="animate">
-        <div class="space-y-4">
-          <div class="flex justify-between">
-            <p class="font-semibold text-black dark:text-white">Recent posts</p>
-            <a
-              href="/blog"
-              class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
-            >
-              <span
-                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
-              >
-                All posts
-              </span>
-            </a>
-          </div>
-          <ul class="space-y-4">
-            {
-              posts.map((post) => (
-                <li>
-                  <ArrowCard entry={post} />
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-
-      <!-- Project Preview Section -->
-      <section class="animate">
-        <div class="space-y-4">
-          <div class="flex justify-between">
-            <p class="font-semibold text-black dark:text-white">
-              Recent projects
-            </p>
-            <a
-              href="/projects"
-              class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
-            >
-              <span
-                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
-              >
-                All projects
-              </span>
-            </a>
-          </div>
-          <ul class="space-y-4">
-            {
-              projects.map((project) => (
-                <li>
-                  <ArrowCard entry={project} />
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </section>
-
-      <!-- Contact Section -->
-      <section class="animate">
-        <div>
-          <p class="font-semibold text-black dark:text-white">Let's Connect</p>
-          <p>Reach out to me via email or on social media.</p>
-          <div class="grid grid-cols-4 gap-y-2 mt-4 auto-cols-min">
-            {
-              SOCIALS.map((social) => (
-                <>
-                  <div class="col-span-1 flex items-center gap-1">
-                    <span class="whitespace-nowrap truncate">
-                      {social.NAME}
-                    </span>
-                  </div>
-                  <div class="col-span-3 truncate">
-                    <a
-                      href={social.HREF}
-                      target="_blank"
-                      class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                <div
+                    id="planet"
+                    class="w-full h-full bg-white dark:bg-black rounded-full p-[1px] overflow-hidden flex justify-center"
+                >
+                    <div
+                        id="blur"
+                        class="w-full h-20 rounded-full bg-neutral-900/25 dark:bg-white/25 blur-3xl"
                     >
-                      <span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
-                        {social.TEXT}
-                      </span>
-                    </a>
-                  </div>
-                </>
-              ))
-            }
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </section>
+        <div
+            class="animate absolute h-full w-full flex items-center justify-center"
+        >
+            <div
+                class="relative w-full h-full flex items-center justify-center"
+            >
+                <div class="p-5 text-center">
+                    <p
+                        class="animated text-lg md:text-xl lg:text-2xl font-semibold opacity-75"
+                    >
+                        I'm
+                    </p>
+                    <p
+                        class="animated text-2xl md:text-3xl lg:text-4xl font-bold uppercase text-black dark:text-white"
+                    >
+                        Grega Rotar
+                    </p>
+                    <br />
+                    <div class="mx-auto max-w-screen-sm p-4 space-y-4 pb-10">
+                        <p>Explore my website to find more about me.</p>
+                        <p>Feel free to contact me!</p>
+                    </div>
+                    <!-- <br/> -->
+                    <div
+                        id="ctaButtons"
+                        class="animated flex flex-wrap gap-4 justify-center mt-5"
+                    >
+                        <a
+                            href="/projects"
+                            class="py-2 px-4 rounded truncate text-xs md:text-sm lg:text-base bg-black dark:bg-white text-white dark:text-black hover:opacity-75 blend"
+                        >
+                            View projects
+                        </a>
+                        <a
+                            href="/work"
+                            class="py-2 px-4 truncate rounded text-xs md:text-sm lg:text-base border border-black/25 dark:border-white/25 hover:bg-black/5 hover:dark:bg-white/15 blend"
+                        >
+                            Work experiences
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <!-- Tech Stack Section -->
-      <section class="animate">
-        <div class="space-y-4">
-          <p class="font-semibold text-black dark:text-white">
-            Website build with
-          </p>
-          <div class="flex flex-wrap items-center gap-2 mt-5">
-            {
-              stack.map((item) => (
-                <StackCard text={item.text} icon={item.icon} href={item.href} />
-              ))
-            }
-          </div>
-        </div>
-      </section>
+    <div class="relative bg-white dark:bg-black">
+        <div class="mx-auto max-w-screen-sm p-5 space-y-24 pb-16">
+            <!-- Project Preview Section -->
+            <section class="animate">
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <p class="font-semibold text-black dark:text-white">
+                            Recent projects
+                        </p>
+                        <a
+                            href="/projects"
+                            class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                        >
+                            <span
+                                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
+                            >
+                                All projects
+                            </span>
+                        </a>
+                    </div>
+                    <ul class="space-y-4">
+                        {
+                            projects.map((project) => (
+                                <li>
+                                    <ArrowCard entry={project} />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            </section>
 
-      <!-- Tech Stack Section -->
-      <section class="animate">
-        <div class="space-y-4">
-          <p class="font-semibold text-black dark:text-white">
-            Website running on
-          </p>
-          <div class="flex flex-wrap items-center gap-2 mt-5">
-            {
-              stackRunningOn.map((item) => (
-                <StackCard text={item.text} icon={item.icon} href={item.href} />
-              ))
-            }
-          </div>
+            <!-- Home Lab Preview Section -->
+            
+            <section class="animate">
+                <div class="space-y-4">
+                    <div class="flex justify-between">
+                        <p class="font-semibold text-black dark:text-white">
+                            Recent posts from Dev Hub
+                        </p>
+                        <a
+                            href="/devHub"
+                            class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                        >
+                            <span
+                                class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend"
+                            >
+                                All Dev Hub posts
+                            </span>
+                        </a>
+                    </div>
+                    <p></p>
+                    <ul class="space-y-4">
+                        {
+                            devHub.map((devHub) => (
+                                <li>
+                                    <ArrowCard entry={devHub} />
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </div>
+            </section>
+           
+
+            <!-- Contact Section -->
+            <section class="animate">
+                <div>
+                    <p class="font-semibold text-black dark:text-white">
+                        Let's Connect
+                    </p>
+                    <p>Reach out to me via email or on social media.</p>
+                    <div class="grid grid-cols-4 gap-y-2 mt-4 auto-cols-min">
+                        {
+                            SOCIALS.map((social) => (
+                                <>
+                                    <div class="col-span-1 flex items-center gap-1">
+                                        <span class="whitespace-nowrap truncate">
+                                            {social.NAME}
+                                        </span>
+                                    </div>
+                                    <div class="col-span-3 truncate">
+                                        <a
+                                            href={social.HREF}
+                                            target="_blank"
+                                            class="w-fit col-span-3 group flex gap-1 items-center underline decoration-[.5px] decoration-black/25 dark:decoration-white/50 hover:decoration-black dark:hover:decoration-white text-black dark:text-white underline-offset-2 blend"
+                                        >
+                                            <span class="text-black/75 dark:text-white/75 group-hover:text-black group-hover:dark:text-white blend">
+                                                {social.TEXT}
+                                            </span>
+                                        </a>
+                                    </div>
+                                </>
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack Section -->
+            <section class="animate">
+                <div class="space-y-4">
+                    <p class="font-semibold text-black dark:text-white">
+                        Website build with
+                    </p>
+                    <div class="flex flex-wrap items-center gap-2 mt-5">
+                        {
+                            stack.map((item) => (
+                                <StackCard
+                                    text={item.text}
+                                    icon={item.icon}
+                                    href={item.href}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tech Stack Section -->
+            <section class="animate">
+                <div class="space-y-4">
+                    <p class="font-semibold text-black dark:text-white">
+                        Website running on
+                    </p>
+                    <div class="flex flex-wrap items-center gap-2 mt-5">
+                        {
+                            stackRunningOn.map((item) => (
+                                <StackCard
+                                    text={item.text}
+                                    icon={item.icon}
+                                    href={item.href}
+                                />
+                            ))
+                        }
+                    </div>
+                </div>
+            </section>
         </div>
-      </section>
     </div>
-  </div>
 </PageLayout>

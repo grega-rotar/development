@@ -1,6 +1,6 @@
 import { defineCollection, z } from "astro:content"
 
-const work = defineCollection({
+const journey = defineCollection({
   type: "content",
   schema: z.object({
     company: z.string(),
@@ -39,7 +39,7 @@ const projects = defineCollection({
   }),
 })
 
-const homeLab = defineCollection({
+const devHub = defineCollection({
   type: "content",
   schema: z.object({
     title: z.string(),
@@ -54,6 +54,21 @@ const homeLab = defineCollection({
   }),
 })
 
+const connect = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    date: z.coerce.date(),
+    team: z.array(z.string()).optional(),
+    tags: z.array(z.string()),
+    draft: z.boolean().optional(),
+    website: z.string().optional(),
+    repoUrl: z.string().optional(),
+    searchTags: z.array(z.string()).optional(),
+  }),
+})
+
 
 const legal = defineCollection({
   type: "content",
@@ -63,4 +78,4 @@ const legal = defineCollection({
   }),
 })
 
-export const collections = { work, blog, projects, legal, homeLab}
+export const collections = { journey, blog, projects, legal, devHub, connect}

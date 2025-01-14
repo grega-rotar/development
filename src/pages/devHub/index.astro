@@ -3,26 +3,26 @@ import { getCollection } from "astro:content"
 import PageLayout from "@layouts/PageLayout.astro"
 import TopLayout from "@layouts/TopLayout.astro"
 import BottomLayout from "@layouts/BottomLayout.astro"
-import HomeLab from "@components/HomeLab"
-import { HOMELAB } from "@consts"
+import DevHub from "@components/DevHub"
+import { DEV_HUB } from "@consts"
 
-const homeLab = (await getCollection("homeLab"))
+const devHub = (await getCollection("devHub"))
   .filter(project => !project.data.draft)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
 
-const tags = [...new Set(homeLab.flatMap(project => project.data.tags))]
+const tags = [...new Set(devHub.flatMap(project => project.data.tags))]
   .sort((a, b) => a.localeCompare(b))
 ---
 
-<PageLayout title={HOMELAB.TITLE} description={HOMELAB.DESCRIPTION}>
+<PageLayout title={DEV_HUB.TITLE} description={DEV_HUB.DESCRIPTION}>
   <TopLayout>
     <div class="animate page-heading">
-      {HOMELAB.TITLE}
+      {DEV_HUB.TITLE}
     </div>
   </TopLayout>
   <BottomLayout>
     <div class="animate">
-      <HomeLab client:load tags={tags} data={homeLab} />
+      <DevHub client:load tags={tags} data={devHub} />
     </div>
   </BottomLayout>
 </PageLayout>
