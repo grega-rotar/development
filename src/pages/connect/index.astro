@@ -1,0 +1,34 @@
+---
+import { getCollection } from "astro:content"
+import PageLayout from "@layouts/PageLayout.astro"
+import TopLayout from "@layouts/TopLayout.astro"
+import BottomLayout from "@layouts/BottomLayout.astro"
+import DevHub from "@components/DevHub"
+import { CONNECT } from "@consts"
+
+const devHub = (await getCollection("devHub"))
+  .filter(project => !project.data.draft)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+
+const tags = [...new Set(devHub.flatMap(project => project.data.tags))]
+  .sort((a, b) => a.localeCompare(b))
+---
+<PageLayout title={CONNECT.TITLE} description={CONNECT.DESCRIPTION}>
+  <TopLayout>
+    <div class="animate page-heading">
+      {CONNECT.TITLE}
+    </div>
+    <div class="animate page-content">
+      <p>I’m sharing the projects I’m working on, and if you're interested, you can collaborate with me! Feel free to join in and work together on exciting things.</p>
+      <br>
+      <p>Explore and collaborate on what I’m building!</p>
+      <br>
+    </div>
+  </TopLayout>
+  <BottomLayout>
+    <div class="animate" id="devHub">
+      <DevHub client:load tags={tags} data={devHub} />
+    </div>
+  </BottomLayout>
+</PageLayout>
+
