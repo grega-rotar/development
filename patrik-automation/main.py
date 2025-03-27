@@ -7,9 +7,10 @@ load_dotenv()
 # selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from time import sleep
-
 
 class Metakocka():    
     LOGIN_URL = "https://metakocka.si/prijava.html"
@@ -32,17 +33,55 @@ class Metakocka():
         submit_btn.click()
     
     def open_sales_foreign(self):
-         # Wait for the element to be clickable before attempting to interact with it
-        sleep(5)
-        links = self.driver.find_elements(By.CSS_SELECTOR, '.gwt-CubeGadget-Link_2')
+        try: 
+            foregin_link_selector = '.gwt-CubeGadget-Link_2'
+            # Waits up to 15 seconds until at least one element is found
+            WebDriverWait(self.driver, 15).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, foregin_link_selector))
+            )
+            links = self.driver.find_elements(By.CSS_SELECTOR, foregin_link_selector)
+            foreign_link = self.find_element_with_text(links, "Foreign")
         
-        foreign_link = self.find_element_with_text(links, "Foreign")
-        foreign_link.click()
-    
-    def search_foreign_invoice(self, what):
-        sleep(5)
-        search_input = self.driver.find_element(By.CSS_SELECTOR, "#x-auto-87-input")
-        search_input.send_keys(what)
+            # Optional: Wait until the specific foreign link is clickable
+            WebDriverWait(self.driver, 10).until(
+                EC.element_to_be_clickable(foreign_link)
+            )
+            foreign_link.click()
+                  
+        except Exception as e:
+            print(e)
+
+    def search_open_foreign_invoice(self, invoice_num):
+        try:
+            search_input_selector = "#x-auto-87-input"
+            WebDriverWait(self.driver, 15).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, search_input_selector))
+            )
+                        
+            search_input = self.driver.find_element(By.CSS_SELECTOR, search_input_selector)
+            search_input.send_keys(invoice_num)
+            search_input.send_keys(Keys.RETURN)
+            # waiting for search results
+            # FIXME
+            sleep(5)
+            
+            search_results_invoices_query = "td.x-grid3-td-id_number > div"
+            WebDriverWait(self.driver, 15).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, search_results_invoices_query))
+            )
+            search_results_invoices = self.driver.find_elements(By.CSS_SELECTOR, search_results_invoices_query)
+            
+            result_invoice = self.find_element_with_text(search_results_invoices, invoice_num)
+            result_invoice.click()
+            
+            sleep(5)
+            open_it_selector = ".x-btn-text"
+            open_it = self.find_element_with_text(self.driver.find_elements(By.CSS_SELECTOR, open_it_selector), "Open it")
+            open_it.click()
+
+            
+        except Exception as e:
+            print(e)
         
         
     @staticmethod    
@@ -62,6 +101,6 @@ metakocka = Metakocka()
 
 metakocka.login()
 metakocka.open_sales_foreign()
-metakocka.search_foreign_invoice("1/2025")
+metakocka.search_open_foreign_invoice("1/2025")
 
 sleep(100)
