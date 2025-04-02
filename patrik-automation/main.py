@@ -4,6 +4,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+WAIT_TIME = 5
+
 # selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -61,9 +63,10 @@ class Metakocka():
             search_input = self.driver.find_element(By.CSS_SELECTOR, search_input_selector)
             search_input.send_keys(invoice_num)
             search_input.send_keys(Keys.RETURN)
+            
             # waiting for search results
             # FIXME
-            sleep(5)
+            sleep(WAIT_TIME)
             
             search_results_invoices_query = "td.x-grid3-td-id_number > div"
             WebDriverWait(self.driver, 15).until(
@@ -74,15 +77,28 @@ class Metakocka():
             result_invoice = self.find_element_with_text(search_results_invoices, invoice_num)
             result_invoice.click()
             
-            sleep(5)
             open_it_selector = ".x-btn-text"
+            WebDriverWait(self.driver, 15).until(
+                EC.presence_of_all_elements_located((By.CSS_SELECTOR, open_it_selector))
+            )
             open_it = self.find_element_with_text(self.driver.find_elements(By.CSS_SELECTOR, open_it_selector), "Open it")
             open_it.click()
-
             
         except Exception as e:
             print(e)
+    
+    def extract_invoice_products(self):
+        products_table_selector = ".gwt-MetaKockaMain-Forme-Table"
+        WebDriverWait(self.driver, 15).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, products_table_selector))
+        )
         
+        sleep(WAIT_TIME)
+        products_table = self.driver.find_elements(By.CSS_SELECTOR, products_table_selector)[0]
+        products_table_rows = products_table.find_elements(By.CSS_SELECTOR, "tbody > tr")
+        
+        for row in products_table_rows:
+            print(row.text)
         
     @staticmethod    
     def find_element_with_text(elements, text):
@@ -102,5 +118,6 @@ metakocka = Metakocka()
 metakocka.login()
 metakocka.open_sales_foreign()
 metakocka.search_open_foreign_invoice("1/2025")
+metakocka.extract_invoice_products()
 
 sleep(100)
