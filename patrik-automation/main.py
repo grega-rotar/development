@@ -5,7 +5,7 @@ import json
 from dotenv import load_dotenv
 load_dotenv()
 
-WAIT_TIME = 2
+WAIT_TIME = 1
 
 # selenium
 from selenium import webdriver
@@ -160,11 +160,51 @@ class Metakocka():
         sleep(WAIT_TIME)
         self.actions.key_down(Keys.ENTER).key_up(Keys.ENTER).perform()
         
+        sleep(WAIT_TIME)
+        
+        shipping_table_selector = ".x-window-bwrap .x-grid3-row-table tbody tr"
+        shipping_table_element = self.driver.find_element(By.CSS_SELECTOR, shipping_table_selector)
+        
+        self.actions.move_to_element(shipping_table_element).click().perform()
+        
+        sleep(WAIT_TIME)
+        input_fields_selector = ".x-component > .x-column-layout-ct > .x-column-inner > .x-form-label-right > .x-form-item"
+        input_fields = self.driver.find_elements(By.CSS_SELECTOR, input_fields_selector)
+        
+        input_selector = (By.CSS_SELECTOR, ".x-form-field.x-form-text")
+        
+        quantity_input = self.find_element_including_text(input_fields, "Quantity").find_element(*input_selector)
+        price_input = self.find_element_including_text(input_fields, "Price/UM").find_element(*input_selector)
+        vat_input = self.find_element_including_text(input_fields, "VAT").find_element(*input_selector)
+        discount_input = self.find_element_including_text(input_fields, "Discount").find_element(*input_selector)
+        
+        self.clear_and_fill_input(vat_input, "19 %")
+        self.clear_and_fill_input(quantity_input, "1")
+        self.clear_and_fill_input(price_input, "100")
+        
+        
+    
+    def clear_and_fill_input(self, element, text):
+        # move and click to specific element
+        self.actions.move_to_element(element).click().perform()    
+        self.actions.key_down(Keys.CONTROL).send_keys("a").key_up(Keys.CONTROL).send_keys(Keys.DELETE).perform()
+        sleep(WAIT_TIME)
+        self.actions.send_keys(text).perform()
+        
     @staticmethod    
     def find_element_with_text(elements, text):
         found_element = None
         for element in elements:
             if text == element.text:
+                found_element = element
+                break
+        return found_element
+    
+    @staticmethod
+    def find_element_including_text(elements, text):
+        found_element = None
+        for element in elements:
+            if text in element.text:
                 found_element = element
                 break
         return found_element
@@ -191,7 +231,7 @@ metakocka = Metakocka()
 
 metakocka.login()
 metakocka.open_sales_foreign()
-metakocka.search_open_foreign_invoice("1/2025")
+metakocka.search_open_foreign_invoice("334/2025")
 metakocka.extract_invoice_products()
 
 metakocka.get_invoice_amount()
