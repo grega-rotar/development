@@ -1,6 +1,7 @@
 # .env variables
 import os
 import json
+import sys
 
 from invoice_extractor import extract_invoice_data
 
@@ -245,7 +246,7 @@ class ProMode():
         pass_input.send_keys(self.PASS)
         submit_btn.click()
     
-    def search_invoice(self, invoice_number=3006985):
+    def search_invoice(self, invoice_number=3007055):
         search_element_selector = "doc-search"
         WebDriverWait(self.driver, 15).until(
             EC.presence_of_all_elements_located((By.ID, search_element_selector))
@@ -263,16 +264,30 @@ class ProMode():
         invoice_tab_table = self.driver.find_element(By.CSS_SELECTOR, "#nav-xrechk table")
         invoice_tab_table_body_rows = invoice_tab_table.find_elements(By.CSS_SELECTOR, "tbody tr")
         
+        invoice_data = []
+        
         for row in invoice_tab_table_body_rows:
             row_divisions = row.find_elements(By.CSS_SELECTOR, "td")
-            invoice_amount = row_divisions[3]
-            invoice_pdf = row_divisions[6].find_element(By.CSS_SELECTOR, "a")
-            print(invoice_amount.text, invoice_pdf.get_attribute("href"))
+            invoice_amount = self.currency_to_num(row_divisions[3].text)
+            invoice_pdf_url = row_divisions[6].find_element(By.CSS_SELECTOR, "a").get_attribute("href")
+            invoice_extracted_data = extract_invoice_data(invoice_pdf_url)
+            
+            invoice_data.append((invoice_amount, invoice_pdf_url, invoice_extracted_data))
+            self.driver.close()
+            
+        print(invoice_data)
+    
+    
+    @staticmethod
+    def currency_to_num(currency_str):
+        return float(currency_str.replace(".", "").replace(",", "."))
     
 
 
 
 # metakocka = Metakocka()
+
+
 
 promode = ProMode()
 promode.search_invoice()

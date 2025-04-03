@@ -55,6 +55,7 @@ def extract_invoice_data(pdf_path_or_url):
             all_pages_text += page.get_text()
         prompt = f"""
             Extract the invoice amount, VAT percentage, and shipping amount from the following text and return them in JSON format. If a value cannot be found, use "x" as the placeholder. If vat value cannot be found than it should be set to 0.
+            Amount and shipping should be in xxxxx.xx format.
             Text:
             {all_pages_text}
 
