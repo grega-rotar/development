@@ -1,6 +1,9 @@
 # .env variables
 import os
 import json
+
+from invoice_extractor import extract_invoice_data
+
 # loading dotenv variables
 from dotenv import load_dotenv
 load_dotenv()
@@ -35,6 +38,7 @@ class Metakocka():
         self.driver = webdriver.Chrome()
         self.driver.get(self.LOGIN_URL)
         self.actions = ActionChains(self.driver)
+        self.login()
     
     def login(self):
         # retriving html elements
@@ -139,7 +143,6 @@ class Metakocka():
         
         return total_amount
         
-    
     def add_freight_cost(self):
         # press Ctrl+E
         self.actions.key_down(Keys.CONTROL).send_keys('e').key_up(Keys.CONTROL).perform()
@@ -180,9 +183,7 @@ class Metakocka():
         
         self.clear_and_fill_input(vat_input, "19 %")
         self.clear_and_fill_input(quantity_input, "1")
-        self.clear_and_fill_input(price_input, "100")
-        
-        
+        self.clear_and_fill_input(price_input, "100")  
     
     def clear_and_fill_input(self, element, text):
         # move and click to specific element
@@ -222,20 +223,66 @@ class Metakocka():
     def currency_to_num(currency_str):
         return float(currency_str.replace(".", "").replace(",", "."))
     
-
+class ProMode():
+    LOGIN_URL = "https://mypromode.eu/openocean/start"
+    USER = os.getenv("PM_USER")
+    PASS = os.getenv("PM_PASS")
+    
+    def __init__(self):
+        self.driver = webdriver.Chrome()
+        self.driver.get(self.LOGIN_URL)
+        self.actions = ActionChains(self.driver)
+        self.login()
+        
+    def login(self):
+        # retriving html elements
+        email_input = self.driver.find_element(By.CSS_SELECTOR, '#login-field')
+        pass_input = self.driver.find_element(By.CSS_SELECTOR, '#password-field')
+        submit_btn = self.driver.find_element(By.CSS_SELECTOR, '#submit-btn')
+        
+        # filling form
+        email_input.send_keys(self.USER)
+        pass_input.send_keys(self.PASS)
+        submit_btn.click()
+    
+    def search_invoice(self, invoice_number=3006985):
+        search_element_selector = "doc-search"
+        WebDriverWait(self.driver, 15).until(
+            EC.presence_of_all_elements_located((By.ID, search_element_selector))
+        )        
+        search_element = self.driver.find_element(By.ID, "doc-search")
+        print(search_element.text)
+        self.actions.move_to_element(search_element).click().send_keys(invoice_number).perform()
+        self.actions.send_keys(Keys.TAB).send_keys("Customer order").send_keys(Keys.ENTER).send_keys(Keys.ENTER).perform()
+        
+        sleep(WAIT_TIME)
+        invoice_tab = self.driver.find_element(By.ID, "nav-xrechk-tab")
+        invoice_tab.click()    
+        
+        sleep(WAIT_TIME)
+        invoice_tab_table = self.driver.find_element(By.CSS_SELECTOR, "#nav-xrechk table")
+        invoice_tab_table_body_rows = invoice_tab_table.find_elements(By.CSS_SELECTOR, "tbody tr")
+        
+        for row in invoice_tab_table_body_rows:
+            row_divisions = row.find_elements(By.CSS_SELECTOR, "td")
+            invoice_amount = row_divisions[3]
+            invoice_pdf = row_divisions[6].find_element(By.CSS_SELECTOR, "a")
+            print(invoice_amount.text, invoice_pdf.get_attribute("href"))
     
 
 
 
-metakocka = Metakocka()
+# metakocka = Metakocka()
 
-metakocka.login()
-metakocka.open_sales_foreign()
-metakocka.search_open_foreign_invoice("334/2025")
-metakocka.extract_invoice_products()
+promode = ProMode()
+promode.search_invoice()
+# metakocka.login()
+# metakocka.open_sales_foreign()
+# metakocka.search_open_foreign_invoice("334/2025")
+# metakocka.extract_invoice_products()
 
-metakocka.get_invoice_amount()
+# metakocka.get_invoice_amount()
 
-metakocka.add_freight_cost()
+# metakocka.add_freight_cost()
 
 sleep(100000)
